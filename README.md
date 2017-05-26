@@ -7,8 +7,10 @@ usage: timesheet.py [-h] [-n N] [-y Y] [-m M] [-dow [DOW [DOW ...]]]
 Generate University Timesheets.
 
 optional arguments:
-  -h, --help            show this help message and exit
-  -n N                  name of the employee (default: Faion, Patrick)
+
+| -h, --help            | show this help message and exit |
+|  -n N                 | name of the employee (default: Faion, Patrick) |
+
   -y Y                  year (default: 2017)
   -m M                  month (default: 5)
   -dow [DOW [DOW ...]]  days of the week (monday = 0, tuesday = 1, ...)
