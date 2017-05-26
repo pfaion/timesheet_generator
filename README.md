@@ -25,6 +25,4 @@ optional arguments:
                         SN, ST, SH, TH (default: NI)
 ```
 
-Example output:
-
-<img src='timesheet.pdf' />
+# [Example output](example_output.pdf)
