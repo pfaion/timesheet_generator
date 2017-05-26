@@ -24,3 +24,7 @@ optional arguments:
                         list: BW, BY, BE, BB, HB, HH, HE, MV, NI, NW, RP, SL,
                         SN, ST, SH, TH (default: NI)
 ```
+
+Example output:
+
+<img src='timesheet.pdf' />
