@@ -798,8 +798,6 @@ r"""
 \usepackage[a4paper, top=0cm, left=0cm, right=0cm, bottom=0cm]{geometry}
 
 \usepackage{graphicx}
-\usepackage{fontspec}
-\setmainfont{Arial}
 
 \usepackage{booktabs}
 
@@ -818,6 +816,7 @@ r"""
 
 \begin{document}
 \thispagestyle{empty}
+\fontfamily{qhv}\selectfont
 
 \includegraphics[width=0.35\paperwidth]{logo.png}
 
@@ -911,7 +910,7 @@ with open("{}.tex".format(filename), "w") as f:
     f.write(tex_pieces[4])
 
 # compile latex and remove additional files
-os.system("lualatex {}.tex".format(filename))
+os.system("pdflatex {}.tex".format(filename))
 os.remove("{}.aux".format(filename))
 os.remove("{}.log".format(filename))
 os.remove("{}.tex".format(filename))
