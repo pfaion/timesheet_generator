@@ -2,6 +2,8 @@
 
 This will generate a random timesheet with valid working hours for your given parameters. It considers weekends and even public holidays. You will need python3 to run it (see requirements.txt for a list of needed libraries) and pdflatex installed and on your path.
 
+The random sampling works with chunks of 30 minutes that are distributed over all valid days with random starting hours until the specified hours are consumed. The days are weighted according to 1/x for some random order, so some days get a lot of chunks and some get only little.
+
 Many options can be configured though parameters, e.g. you can specify to work only on Mondays and Wednesdays by passing `-dow 0 2`. For continued usage you might want to adjust the default-values directly in your script at the very top.
 
 This tool is only considered for checking the validity of timesheets and not intended for submission.
