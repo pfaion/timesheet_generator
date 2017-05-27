@@ -272,7 +272,7 @@ r"""
 
   \vspace{0.3cm}
   \footnotesize
-  Datum \hspace{0.5cm} Unteschrift des Arbeitnehmbers \hspace{2.2cm} Datum \hspace{0.5cm} Unterschrift Leiterin / Leiter der OE
+  Datum \hspace{0.5cm} Unterschrift des Arbeitnehmers \hspace{2.2cm} Datum \hspace{0.5cm} Unterschrift Leiterin / Leiter der OE
 
 \end{addmargin}
 
