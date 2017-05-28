@@ -823,41 +823,44 @@ r"""
 
 \includegraphics[width=0.35\paperwidth]{logo.png}
 
-\vspace{1cm}
+\vspace{0.2cm}
 
 
 \begin{addmargin}{2.2cm}
   
   \begin{tabular}{l l}
-    \textbf{\large Vorlage zur Erfassung der geleisteten Arbeitszeiten} & \\
+    \textbf{\large Erfassung der geleisteten Arbeitszeiten} & \\
   \end{tabular}
   
-  \vspace{0.3cm}
+  \vspace{0.5cm}
   \begin{tabular}{p{.4\linewidth} p{.53\linewidth}}
-    \textbf{Name, Vorname} & \\
-    \textbf{der Mitarbeiterin/des Mitarbeiters:} & """,
+    Name, Vorname der Hilfskraft: & """,
     
 # Name
 
 r"""
     \\ \cmidrule{2-2}
-    ~& \\
-    \textbf{Organisationseinheit:} & """,
+    Fachbereit/Organisationseinheit: & """,
 
 # Organisationseinheit
 
 r"""
     \\ \cmidrule{2-2}
-    ~& \\
-    \textbf{Monat/Jahr:} & """,
+    Monat/Jahr: & """,
 
 # Monat/Jahr
 
 r"""
     \\ \cmidrule{2-2}
+    Monatsarbeitszeit laut Arbeitsvertrag: & """,
+
+# Arbeitszeit
+
+r"""
+    \\ \cmidrule{2-2}
   \end{tabular}
 
-  \vspace{1cm}
+  \vspace{0.5cm}
 
   \begin{tabular}{| P{1.3cm} | P{1.3cm} | P{1.1cm} | P{1.3cm} | P{1.3cm} | P{2cm} | P{5cm} |}
     \hline
@@ -870,14 +873,19 @@ r"""
 
 r"""
   \end{tabular}
+  
+  \vspace{0.1cm}
+  \hspace{6.83cm}\textbf{=======}
 
   \vspace{1.5cm}
 
-  $\rule{7.9cm}{0.2mm}$ ~~~ $\rule{7.9cm}{0.1mm}$
+  $\rule{7.9cm}{0.1mm}$ ~~~ $\rule{7.9cm}{0.1mm}$
 
   \vspace{0.3cm}
   \footnotesize
-  Datum \hspace{0.5cm} Unterschrift des Arbeitnehmers \hspace{2.2cm} Datum \hspace{0.5cm} Unterschrift Leiterin / Leiter der OE
+  Datum, Unterschrift der Hilfskraft \hspace{3.65cm} Datum, Unterschrift der Leiterin / des Leiter der OE
+  
+  \hspace{9.5cm}alternativ: Vorgesetzte / Vorgesetzter
 
 \end{addmargin}
 
@@ -907,10 +915,12 @@ with open("{}.tex".format(filename), "w") as f:
     f.write(tex_pieces[2])
     f.write(header_date)
     f.write(tex_pieces[3])
+    f.write(total_hours_formatted)
+    f.write(tex_pieces[4])
     for entries in data:
         f.write(entry_template.format(*entries))
     f.write(entry_template.format(r"\textbf{Summe}", "", "", total_hours_formatted, ""))
-    f.write(tex_pieces[4])
+    f.write(tex_pieces[5])
 
 # compile latex and remove additional files
 os.system("pdflatex {}.tex".format(filename))
