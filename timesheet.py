@@ -10,9 +10,14 @@ default_days_of_week = [0, 1, 2, 3, 4]
 default_start_hour = 8
 default_end_hour = 20
 default_max_hours = 6
-default_ldom = 31
 default_output_file_name = 'timesheet'
 default_state = 'NI'
+
+# current-date relative defaults
+import datetime
+default_month = datetime.date.today().month
+default_year = datetime.date.today().year
+default_ldom = datetime.date.today().day - 1
 ###
 ###
 ###
@@ -22,7 +27,6 @@ import datetime
 import argparse
 import holidays
 import calendar
-import datetime
 import numpy as np
 import random
 import os
@@ -32,22 +36,18 @@ import base64
 ### PARSE ARGUMENTS
 ###
 
-# default date is current month
-default_month = datetime.date.today().month
-default_year = datetime.date.today().year
-
 # parse arguments
 parser = argparse.ArgumentParser(description='Generate University Timesheets.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 parser.add_argument('-n', help='name of the employee', default=default_name)
-parser.add_argument('-y', help='year', type=int, default=default_year)
-parser.add_argument('-m', help='month', type=int, default=default_month)
+parser.add_argument('-y', help='year (defaults to current)', type=int, default=default_year)
+parser.add_argument('-m', help='month (defaults to current)', type=int, default=default_month)
+parser.add_argument('-ldom', help='last day of the month that should be used (defaults to yesterday)', type=int, default=default_ldom)
 parser.add_argument('-dow', help='days of the week (monday = 0, tuesday = 1, ...)', type=int, nargs='*', default=default_days_of_week)
 parser.add_argument('-uoo', help='unit of organisation', default=default_unit_of_organisation)
 parser.add_argument('-hrs', help='hours', type=int, default=default_hours)
 parser.add_argument('-s', help='start time', type=int, default=default_start_hour)
 parser.add_argument('-e', help='end time', type=int, default=default_end_hour)
 parser.add_argument('-max', help='maximum hours for a day', type=int, default=default_max_hours)
-parser.add_argument('-ldom', help='last day of the month that should be used', type=int, default=default_ldom)
 parser.add_argument('-o', help='output file name', default=default_output_file_name)
 parser.add_argument('-state', help='german state for public holiday considerations, from list: BW, BY, BE, BB, HB, HH, HE, MV, NI, NW, RP, SL, SN, ST, SH, TH', default=default_state)
 

@@ -11,17 +11,20 @@ This tool is only considered for checking the validity of timesheets and not int
 Have a look at some [example output](example_output.pdf).
 
 ```
-usage: python3 timesheet.py [-h] [-n N] [-y Y] [-m M] [-dow [DOW [DOW ...]]]
-                    [-uoo UOO] [-hrs HRS] [-s S] [-e E] [-max MAX]
-                    [-ldom LDOM] [-o O] [-state STATE]
+usage:
+python3 timesheet.py [-h] [-n N] [-y Y] [-m M] [-ldom LDOM]
+                     [-dow [DOW [DOW ...]]] [-uoo UOO] [-hrs HRS] [-s S] [-e E]
+                     [-max MAX] [-o O] [-state STATE]
 
 Generate University Timesheets.
 
 optional arguments:
   -h, --help            show this help message and exit
   -n N                  name of the employee (default: Faion, Patrick)
-  -y Y                  year (default: 2017)
-  -m M                  month (default: 5)
+  -y Y                  year (defaults to current) (default: 2017)
+  -m M                  month (defaults to current) (default: 5)
+  -ldom LDOM            last day of the month that should be used (defaults to
+                        yesterday) (default: 27)
   -dow [DOW [DOW ...]]  days of the week (monday = 0, tuesday = 1, ...)
                         (default: [0, 1, 2, 3, 4])
   -uoo UOO              unit of organisation (default: )
@@ -29,8 +32,6 @@ optional arguments:
   -s S                  start time (default: 8)
   -e E                  end time (default: 20)
   -max MAX              maximum hours for a day (default: 6)
-  -ldom LDOM            last day of the month that should be used (default:
-                        31)
   -o O                  output file name (default: timesheet)
   -state STATE          german state for public holiday considerations, from
                         list: BW, BY, BE, BB, HB, HH, HE, MV, NI, NW, RP, SL,
