@@ -799,6 +799,7 @@ tex_pieces = [
 r"""
 \documentclass[11pt]{scrartcl}
 \usepackage[a4paper, top=0cm, left=0cm, right=0cm, bottom=0cm]{geometry}
+\usepackage[utf8]{inputenc}
 
 \usepackage{graphicx}
 
