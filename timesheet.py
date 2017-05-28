@@ -10,6 +10,7 @@ default_days_of_week = [0, 1, 2, 3, 4]
 default_start_hour = 8
 default_end_hour = 20
 default_max_hours = 6
+default_ldom = 31
 default_output_file_name = 'timesheet'
 default_state = 'NI'
 ###
@@ -45,8 +46,9 @@ parser.add_argument('-uoo', help='unit of organisation', default=default_unit_of
 parser.add_argument('-hrs', help='hours', type=int, default=default_hours)
 parser.add_argument('-s', help='start time', type=int, default=default_start_hour)
 parser.add_argument('-e', help='end time', type=int, default=default_end_hour)
-parser.add_argument('-o', help='output file name', default=default_output_file_name)
 parser.add_argument('-max', help='maximum hours for a day', type=int, default=default_max_hours)
+parser.add_argument('-ldom', help='last day of the month that should be used', type=int, default=default_ldom)
+parser.add_argument('-o', help='output file name', default=default_output_file_name)
 parser.add_argument('-state', help='german state for public holiday considerations, from list: BW, BY, BE, BB, HB, HH, HE, MV, NI, NW, RP, SL, SN, ST, SH, TH', default=default_state)
 
 args = parser.parse_args()
@@ -62,6 +64,7 @@ work_start = args.s
 max_hours = args.max
 work_end = args.e
 filename = args.o
+ldom = args.ldom
 
 ###
 ### HELPER FUNCTIONS
@@ -95,7 +98,7 @@ days_in_month = calendar.monthrange(year, month)[1]
 
 # check which days are valid, i.e. are specified workdays and not holidays
 valid_days = []
-for day in range(1, days_in_month + 1):
+for day in range(1, min(days_in_month, ldom) + 1):
     date = datetime.date(year, month, day)
     if date not in public_holidays and date.weekday() in days_of_week:
         valid_days.append(day)
