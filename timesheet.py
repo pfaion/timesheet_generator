@@ -835,7 +835,7 @@ r"""
   \vspace{0.3cm}
   \begin{tabular}{p{.4\linewidth} p{.53\linewidth}}
     \textbf{Name, Vorname} & \\
-    \textbf{der Mitarbeitering/des Mitarbeiters:} & """,
+    \textbf{der Mitarbeiterin/des Mitarbeiters:} & """,
     
 # Name
 
