@@ -925,8 +925,10 @@ with open("{}.tex".format(filename), "w") as f:
 
 # compile latex and remove additional files
 os.system("pdflatex {}.tex".format(filename))
-os.remove("{}.aux".format(filename))
-os.remove("{}.log".format(filename))
+if os.path.isfile("{}.aux".format(filename)):
+    os.remove("{}.aux".format(filename))
+if os.path.isfile("{}.log".format(filename)):
+    os.remove("{}.log".format(filename))
 os.remove("{}.tex".format(filename))
 os.remove("logo.png")
 
