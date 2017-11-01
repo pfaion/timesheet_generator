@@ -3,12 +3,12 @@
 ###
 ### Use following section to set your personal default values!
 ###
-default_name = 'Faion, Patrick'
-default_unit_of_organisation = ""
-default_hours = 24
+default_name = '<your name>'
+default_unit_of_organisation = '<your organisation>'
+default_hours = 23
 default_days_of_week = [0, 1, 2, 3, 4]
 default_start_hour = 8
-default_end_hour = 20
+default_end_hour = 18
 default_max_hours = 6
 default_output_file_name = 'timesheet'
 default_state = 'NI'
@@ -17,7 +17,9 @@ default_state = 'NI'
 import datetime
 default_month = datetime.date.today().month
 default_year = datetime.date.today().year
+default_fdom = 1
 default_ldom = datetime.date.today().day - 1
+
 ###
 ###
 ###
@@ -41,10 +43,11 @@ parser = argparse.ArgumentParser(description='Generate University Timesheets.', 
 parser.add_argument('-n', help='name of the employee', default=default_name)
 parser.add_argument('-y', help='year (defaults to current)', type=int, default=default_year)
 parser.add_argument('-m', help='month (defaults to current)', type=int, default=default_month)
+parser.add_argument('-fdom', help='first day of the month that should be used (defaults to beginning of month)', type=int, default=default_fdom)
 parser.add_argument('-ldom', help='last day of the month that should be used (defaults to yesterday)', type=int, default=default_ldom)
 parser.add_argument('-dow', help='days of the week (monday = 0, tuesday = 1, ...)', type=int, nargs='*', default=default_days_of_week)
 parser.add_argument('-uoo', help='unit of organisation', default=default_unit_of_organisation)
-parser.add_argument('-hrs', help='hours', type=int, default=default_hours)
+parser.add_argument('-hrs', help='hours', type=float, default=default_hours)
 parser.add_argument('-s', help='start time', type=int, default=default_start_hour)
 parser.add_argument('-e', help='end time', type=int, default=default_end_hour)
 parser.add_argument('-max', help='maximum hours for a day', type=int, default=default_max_hours)
@@ -71,12 +74,12 @@ ldom = args.ldom
 ###
 
 def format_timedelta(td):
-    '''Format datetime.timedelta as "hh:mm".'''
+    """Format datetime.timedelta as "hh:mm"."""
     s = td.total_seconds()
     return "{:0>2d}:{:0>2d}".format(int(s // 3600), int((s % 3600) // 60))
 
 def weighted_choice(choices):
-    '''Select random choice from list of (option, weight) pairs according to the weights.'''
+    """Select random choice from list of (option, weight) pairs according to the weights."""
     choices = list(choices)
     total = sum(w for c, w in choices)
     r = random.uniform(0, total)
@@ -92,18 +95,19 @@ def weighted_choice(choices):
 ### DATA GENERATION
 ###
 
-# get public holidays and legth of the month
-public_holidays = holidays.DE(state='NI', years=year)
+# get public holidays and length of the month
+public_holidays = holidays.DE(state=args.state, years=year)
 days_in_month = calendar.monthrange(year, month)[1]
 
 # check which days are valid, i.e. are specified workdays and not holidays
 valid_days = []
-for day in range(1, min(days_in_month, ldom) + 1):
+for day in range(args.fdom, min(days_in_month, ldom) + 1):
     date = datetime.date(year, month, day)
     if date not in public_holidays and date.weekday() in days_of_week:
         valid_days.append(day)
 
-# distribute hours over valid days. use exponential weights (after random shuffle) for days, so some days are used often and some are used rarely
+# Distribute hours over valid days. Use exponential weights (after random shuffle) for days,
+# so some days are used often and some are used rarely.
 possible_days = valid_days
 random.shuffle(possible_days)
 weights = list(1 / np.arange(1, len(possible_days) + 1))
@@ -828,15 +832,15 @@ r"""
 
 
 \begin{addmargin}{2.2cm}
-  
+
   \begin{tabular}{l l}
     \textbf{\large Erfassung der geleisteten Arbeitszeiten} & \\
   \end{tabular}
-  
+
   \vspace{0.5cm}
   \begin{tabular}{p{.4\linewidth} p{.53\linewidth}}
     Name, Vorname der Hilfskraft: & """,
-    
+
 # Name
 
 r"""
@@ -874,7 +878,7 @@ r"""
 
 r"""
   \end{tabular}
-  
+
   \vspace{0.1cm}
   \hspace{6.83cm}\textbf{=======}
 
@@ -885,7 +889,7 @@ r"""
   \vspace{0.3cm}
   \footnotesize
   Datum, Unterschrift der Hilfskraft \hspace{3.65cm} Datum, Unterschrift der Leiterin / des Leiter der OE
-  
+
   \hspace{9.5cm}alternativ: Vorgesetzte / Vorgesetzter
 
 \end{addmargin}
@@ -897,7 +901,7 @@ r"""
 entry_template = "{}&{}&&{}&{}&{}&\\\\\\hline\n"
 
 
-### 
+###
 ### BUILD
 ###
 
@@ -931,6 +935,3 @@ if os.path.isfile("{}.log".format(filename)):
     os.remove("{}.log".format(filename))
 os.remove("{}.tex".format(filename))
 os.remove("logo.png")
-
-
-
